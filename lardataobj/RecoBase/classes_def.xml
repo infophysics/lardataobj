@@ -163,6 +163,7 @@
   <class name="art::PtrVector<recob::OpFlash>"/>
   <class name="art::PtrVector<recob::TrackFitHitInfo>"/>
   <class name="art::PtrVector<recob::MCSFitResult>"/>
+  <class name="std::vector<art::Ptr<recob::Cluster>>"/>
   <class name="std::vector< art::PtrVector<recob::Cluster>>"/>
   <class name="std::vector< art::PtrVector<recob::TrackFitHitInfo>>"/>
 
@@ -205,6 +206,7 @@
   <class name="art::Wrapper< std::vector< recob::OpFlash>>"/>
   <class name="art::Wrapper< std::vector< recob::MCSFitResult>>"/>
   <class name="art::Wrapper< std::vector< art::PtrVector<recob::Cluster>>>"/>
+  <class name="art::Wrapper< std::vector< art::Ptr<recob::Cluster>>>"/>
   <class name="art::Wrapper< std::vector< std::vector<recob::TrackFitHitInfo>>>"/>
 
   <!-- io rules for types in this file -->

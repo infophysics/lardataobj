@@ -9,7 +9,7 @@ product         version
 larcoreobj	v09_02_01_01
 larcorealg	v09_01_02_01
 nusimdata	v1_24_04
-cetbuildtools	v8_12_00	-	only_for_build
+cetbuildtools	v8_13_01	-	only_for_build
 end_product_list
 
 qualifier       larcoreobj    larcorealg    nusimdata

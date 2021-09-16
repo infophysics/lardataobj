@@ -17,24 +17,24 @@ namespace recob {
   // has a certain number of PE; each subevent has a time associated with it
   class OpFlash {
     public:
-      OpFlash(); // Default constructor
+      OpFlash() = default;
 
 private:
 
-      double                fTime;         // Time relative to trigger
-      double                fTimeWidth;    // Width of the flash in time
-      double                fAbsTime;      // Time by PMT readout clock
-      unsigned int          fFrame;        // Frame number
-      std::vector< double > fPEperOpDet;   // Number of PE on each PMT
-      std::vector< double > fWireCenters;  // Geometric center in each view
-      std::vector< double > fWireWidths;   // Geometric width in each view
-      double                fYCenter;      // Geometric center in y
-      double                fYWidth;       // Geometric width in y
-      double                fZCenter;      // Geometric center in z
-      double                fZWidth;       // Geometric width in z
-      double                fFastToTotal;  // Fast to total light ratio
-      bool                  fInBeamFrame;  // Is this in the beam frame?
-      int                   fOnBeamTime;   // Is this in time with beam?
+      double                fTime { 0.0 }; ///< Time on @ref DetectorClocksHardwareTrigger "trigger time scale" [us]
+      double                fTimeWidth;    ///< Width of the flash in time [us]
+      double                fAbsTime;      ///< Time by PMT readout clock
+      unsigned int          fFrame;        ///< Frame number
+      std::vector< double > fPEperOpDet;   ///< Number of PE on each PMT
+      std::vector< double > fWireCenters;  ///< Geometric center in each view
+      std::vector< double > fWireWidths;   ///< Geometric width in each view
+      double                fYCenter;      ///< Geometric center in y [cm]
+      double                fYWidth;       ///< Geometric width in y [cm]
+      double                fZCenter;      ///< Geometric center in z [cm]
+      double                fZWidth;       ///< Geometric width in z [cm]
+      double                fFastToTotal;  ///< Fast to total light ratio
+      bool                  fInBeamFrame;  ///< Is this in the beam frame?
+      int                   fOnBeamTime;   ///< Is this in time with beam?
 
 
 
@@ -66,10 +66,8 @@ private:
       bool                  InBeamFrame()       const;
       int                   OnBeamTime()        const;
 
-      std::vector<double>   WireCenters()       const;
-      std::vector<double>   WireWidths()        const;
-
-      friend bool           operator <  (const OpFlash & a, const OpFlash & b);
+      std::vector<double> const& WireCenters()  const;
+      std::vector<double> const& WireWidths()   const;
 
       double                TotalPE()           const;
       double                FastToTotal()       const;
@@ -91,14 +89,15 @@ inline double recob::OpFlash::YWidth()            const { return fYWidth;      }
 inline double recob::OpFlash::ZCenter()           const { return fZCenter;     }
 inline double recob::OpFlash::ZWidth()            const { return fZWidth;      }
 inline double recob::OpFlash::FastToTotal()            const { return fFastToTotal;      }
-inline std::vector<double> recob::OpFlash::WireCenters()            const { return fWireCenters;      }
-inline std::vector<double> recob::OpFlash::WireWidths()             const { return fWireWidths;      }
+inline std::vector<double> const& recob::OpFlash::WireCenters() const { return fWireCenters;      }
+inline std::vector<double> const& recob::OpFlash::WireWidths() const { return fWireWidths;      }
 inline bool  recob::OpFlash::InBeamFrame()          const { return fInBeamFrame;     }
 inline int  recob::OpFlash::OnBeamTime()          const { return fOnBeamTime;     }
 
 namespace recob{
   struct OpFlashSortByTime {
-    bool operator() (recob::OpFlash i, recob::OpFlash j){ return i.Time() < j.Time(); }
+    bool operator() (recob::OpFlash const& i, recob::OpFlash const& j) const
+      { return i.Time() < j.Time(); }
   };
 }
 

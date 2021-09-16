@@ -10,6 +10,8 @@
 #define OPFLASH_H
 
 #include <vector>
+#include <limits> // std::numeric_limits<>
+
 
 namespace recob {
 
@@ -17,6 +19,10 @@ namespace recob {
   // has a certain number of PE; each subevent has a time associated with it
   class OpFlash {
     public:
+      
+      /// Special value used for absence of center location information.
+      static constexpr double NoCenter = std::numeric_limits<double>::max();
+      
       OpFlash() = default;
 
 private:
@@ -28,6 +34,8 @@ private:
       std::vector< double > fPEperOpDet;   ///< Number of PE on each PMT
       std::vector< double > fWireCenters;  ///< Geometric center in each view
       std::vector< double > fWireWidths;   ///< Geometric width in each view
+      double                fXCenter { NoCenter }; ///< Estimated center in x [cm]
+      double                fXWidth { NoCenter }; ///< Estimated width in x [cm]
       double                fYCenter;      ///< Geometric center in y [cm]
       double                fYWidth;       ///< Geometric width in y [cm]
       double                fZCenter;      ///< Geometric center in z [cm]
@@ -40,6 +48,17 @@ private:
 
 
   public:
+      /// Constructor: all data members directly initialized.
+      OpFlash(double time, double timewidth, double abstime, unsigned int frame,
+	      std::vector< double > PEperOpDet,
+	      bool InBeamFrame, int OnBeamTime, double FastToTotal,
+	      double xCenter, double xWidth,
+	      double yCenter, double yWidth,
+	      double zCenter, double zWidth,
+	      std::vector<double> WireCenters = std::vector<double>(0),
+	      std::vector<double> WireWidths  = std::vector<double>(0));
+
+      /// Constructor: all data members directly initialized except x coordinate.
       OpFlash(double time, double timewidth, double abstime, unsigned int frame,
 	      std::vector< double > PEperOpDet,
 	      bool InBeamFrame=0, int OnBeamTime=0, double FastToTotal=1,
@@ -58,6 +77,12 @@ private:
       /// Returns a vector with a number of photoelectrons per channel.
       std::vector<double> const& PEs()          const;
 
+      /// Returns whether the estimated center on _x_ direction is available.
+      bool hasXCenter() const;
+      
+      /// Returns the estimated center on _x_ direction (@see `hasXCenter()`).
+      double                XCenter()           const;
+      double                XWidth()            const;
       double                YCenter()           const;
       double                YWidth()            const;
       double                ZCenter()           const;
@@ -84,6 +109,9 @@ inline double recob::OpFlash::AbsTime()           const { return fAbsTime;     }
 inline unsigned int recob::OpFlash::Frame()       const { return fFrame;       }
 inline double recob::OpFlash::PE(unsigned int i)  const { return fPEperOpDet[i]; }
 inline std::vector<double> const& recob::OpFlash::PEs() const { return fPEperOpDet; }
+inline bool recob::OpFlash::hasXCenter()          const { return fXCenter != NoCenter; }
+inline double recob::OpFlash::XCenter()           const { return fXCenter;     }
+inline double recob::OpFlash::XWidth()            const { return fXWidth;      }
 inline double recob::OpFlash::YCenter()           const { return fYCenter;     }
 inline double recob::OpFlash::YWidth()            const { return fYWidth;      }
 inline double recob::OpFlash::ZCenter()           const { return fZCenter;     }

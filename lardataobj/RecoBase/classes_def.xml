@@ -114,7 +114,8 @@
   <class name="recob::OpHit" ClassVersion="14">
     <version ClassVersion="14" checksum="3730974187"/>
   </class>
-  <class name="recob::OpFlash" ClassVersion="18">
+  <class name="recob::OpFlash" ClassVersion="19">
+    <version ClassVersion="19" checksum="4173863904"/>
     <version ClassVersion="18" checksum="507533507"/>
     <version ClassVersion="17" checksum="1882235791"/>
   </class>

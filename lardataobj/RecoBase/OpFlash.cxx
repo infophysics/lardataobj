@@ -18,6 +18,7 @@ namespace recob{
   OpFlash::OpFlash(double time, double timewidth, double abstime, unsigned int frame,
 		   std::vector<double> PEperOpDet,
 		   bool InBeamFrame, int onBeamTime, double FastToTotal,
+		   double xCenter, double xWidth,
 		   double yCenter, double yWidth,
 		   double zCenter, double zWidth,
 		   std::vector<double> WireCenters,
@@ -29,6 +30,8 @@ namespace recob{
     , fPEperOpDet  { std::move(PEperOpDet) }
     , fWireCenters { std::move(WireCenters) }
     , fWireWidths  { std::move(WireWidths) }
+    , fXCenter     { xCenter }
+    , fXWidth      { xWidth }
     , fYCenter     { yCenter }
     , fYWidth      { yWidth }
     , fZCenter     { zCenter }
@@ -38,6 +41,22 @@ namespace recob{
     , fOnBeamTime  { onBeamTime }
   {
   }
+
+  //----------------------------------------------------------------------
+  OpFlash::OpFlash(double time, double timewidth, double abstime, unsigned int frame,
+		   std::vector<double> PEperOpDet,
+		   bool InBeamFrame, int onBeamTime, double FastToTotal,
+		   double yCenter, double yWidth,
+		   double zCenter, double zWidth,
+		   std::vector<double> WireCenters,
+		   std::vector<double> WireWidths)
+    : OpFlash{
+      time, timewidth, abstime, frame,
+      std::move(PEperOpDet), InBeamFrame, onBeamTime, FastToTotal,
+      NoCenter, NoCenter, yCenter, yWidth, zCenter, zWidth,
+      std::move(WireCenters), std::move(WireWidths)
+      }
+    {}
 
   //----------------------------------------------------------------------
   bool operator < (const OpFlash & a, const OpFlash & b)

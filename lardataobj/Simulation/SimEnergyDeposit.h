@@ -70,7 +70,8 @@ namespace sim
 		     double t0 = 0.,
 		     double t1 = 0.,
 		     int id = 0,
-		     int pdg = 0)
+		     int pdg = 0,
+		     int parent = 0)
       : numPhotons(np)
 //      , numFPhotons(nfp)
 //      , numSPhotons(nsp)
@@ -83,6 +84,7 @@ namespace sim
       , endTime(t1)
       , trackID(id)
       , pdgCode(pdg)
+      , parentID(parent)
     {
     }
 
@@ -102,6 +104,7 @@ namespace sim
     double Time() const { return (startTime+endTime)/2.; }
     int TrackID() const { return trackID; }
     int PdgCode() const { return pdgCode; }
+    int ParentID() const { return parentID; }
 
     // While it's clear how a SimEnergyDeposit will be created by its
     // constructor, it's not clear how users will want to access its
@@ -193,6 +196,7 @@ namespace sim
     double        endTime;      ///< (ns)
     int           trackID;      ///< simulation track id
     int           pdgCode;      ///< pdg code of particle to avoid lookup by particle type later
+    int           parentID;	///< parent id of the object that generated the deposit
   };
   /*
   // Class utility functions.
